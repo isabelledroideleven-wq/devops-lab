@@ -1,16 +1,23 @@
-name: My First Pipeline
+name: CI Pipeline
 
-on: [push]  # Trigger: Whenever I push code
+on: [push]
 
 jobs:
-  test-code:
-    runs-on: ubuntu-latest  # The Computer: Rent a generic Linux box
+  build-and-test:
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Action: Download my code to that box
+      uses: actions/checkout@v3
 
-    - name: Verify Docker Compose works
+    - name: Build the Stack
       run: |
-        docker compose config  # Command: Check if my YAML syntax is valid
-        echo "If you see this, the YAML file is valid!"
+        docker compose build
+        echo "Build successful! The images are ready."
+
+    - name: Test Run (Sanity Check)
+      run: |
+        docker compose up -d
+        docker ps -a
+        sleep 10
+        docker compose logs
