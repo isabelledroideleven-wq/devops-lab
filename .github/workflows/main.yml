@@ -12,5 +12,5 @@ jobs:
 
     - name: Verify Docker Compose works
       run: |
-        docker-compose config  # Command: Check if my YAML syntax is valid
+        docker compose config  # Command: Check if my YAML syntax is valid
         echo "If you see this, the YAML file is valid!"
